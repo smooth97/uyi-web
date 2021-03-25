@@ -11,9 +11,10 @@ COPY build /app/build
 # RUN npm run build
 
 # Production environment
+
 FROM nginx:1.16.0-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
-RUN rm -rf /etc/nginx/conf.d
-COPY conf /etc/nginx
+RUN rm -rf /etc/nginx/conf.d/*
+COPY conf/default.conf /etc/nginx/conf.d/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
